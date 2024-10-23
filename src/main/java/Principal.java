@@ -1,6 +1,6 @@
 
 /**
- * Implementação de Árvore Binária Encadeada.
+ * Implementação de Árvore B+ Encadeada.
  */
 import javax.swing.JOptionPane;
 

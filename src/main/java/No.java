@@ -1,7 +1,7 @@
 
 /**
  *
- * Nó a ser armazenado na árvore b.
+ * Nó a ser armazenado na árvore b+.
  *
  */
 public class No {
@@ -10,27 +10,27 @@ public class No {
      * Chaves armazenadas no nó.
      */
     private int[] chave;
-    
+
     /**
      * Vetor dos ponteiros dos filhos(children).
      */
     private No[] c;
-    
+
     /**
      * Próxino nó.
      */
     private No proximo;
-    
+
     /**
      * Número de chaves armazenadas.
      */
     private int n;
-    
+
     /**
      * Ordem da árvore;
      */
     private int t;
-    
+
     /**
      * Indica ´se é um nó folha;
      */
@@ -42,23 +42,22 @@ public class No {
     public No() {
         this(3, true);
     }
-    
+
     /**
      * Construtor sem parâmetros.
+     *
      * @param t Grau da árvore, quantidade de filhos para o nó.
      * @param folha Indica se o nó é uma folha ou não.
      */
     public No(int t, boolean folha) {
         this.proximo = null;
-        this.n = 0;       
+        this.n = 0;
         this.t = t;
         this.folha = folha;
-        //Aloca as estruturas do nó da árvore b.
         //Aloca o vetor de chaves
         this.chave = new int[2 * this.t - 1];
         //Aloca o vetor nós filhos
         this.c = new No[2 * this.t];
-        
     }
 
     /**
@@ -108,8 +107,7 @@ public class No {
     public void setC(int i, No filho) {
         c[i] = filho;
     }
-    
-    
+
     /**
      * Recuperador o próximo nó.
      *
@@ -149,7 +147,7 @@ public class No {
     public void setN(int n) {
         this.n = n;
     }
-    
+
     /**
      * Recuperador de t.
      *
@@ -167,7 +165,7 @@ public class No {
     public void setT(int t) {
         this.t = t;
     }
-    
+
     /**
      * Retorna se´o nó é folha.
      *
@@ -192,9 +190,12 @@ public class No {
      * @param k Chave a ser inserida.
      * @return Indica da posição no vetor.
      */
-    public int procurarPosicao(int k) {
+    public int procurarPosicaoChave(int k) {
         int i = 0;
         while ((i < n) && (k > chave[i])) {
+            if (k == chave[i]) {
+                return i;
+            }
             i = i + 1;
         }
         return i;
@@ -221,14 +222,14 @@ public class No {
 
             chaves_str = chaves_str + this.getChave(i) + " ";
         }
-        chaves_str  = chaves_str + "]";
-        
+        chaves_str = chaves_str + "]";
+
         String filhos_str = "[";
         for (int i = 0; i < c.length; i++) {;
 
             filhos_str = filhos_str + this.getC(i) + " ";
         }
-        filhos_str  = filhos_str + "]";
+        filhos_str = filhos_str + "]";
 
         return "OID: " + this + " / n:" + this.n + " / folha:" + this.folha + " / chaves: " + chaves_str + " / c: " + filhos_str + " / próximo: " + this.getProximo();
     }
