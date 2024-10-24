@@ -257,6 +257,7 @@ public class ArvoreBPlus {
         //Cria um novo nó filho que irá armazenar chaves (t-1) de y.
         //Este novo nó vai ficar a esquerda de y.
         No z = new No(this.t, y.getFolha());
+        z.setProximo(y.getProximo());
         z.setN(t - 1);
 
         //Copia as últimas chaves (t-1) de y(esquerda) para z(direita)
@@ -276,6 +277,7 @@ public class ArvoreBPlus {
         }
         //Reduz a quantidade de elementos de y
         y.setN(t - 1);
+        y.setProximo(z);
 
         //Como este nó terá um novo filho, cria espaço para o novo filho
         for (int j = x.getN(); j >= i + 1; j--) {
@@ -299,11 +301,11 @@ public class ArvoreBPlus {
         //Incrementa a contagem de chaves neste nó
         x.setN(x.getN() + 1);
 
-        //Se child não for folha
-        if (y.getFolha() == true) {
-            z.setProximo(y.getProximo());
-            y.setProximo(z);
-        }
+//        //Se child não for folha
+//        if (y.getFolha() == true) {
+//            z.setProximo(y.getProximo());
+//            y.setProximo(z);
+//        }
     }
 
     /**
@@ -837,7 +839,7 @@ public class ArvoreBPlus {
      * @param _raiz Raiz da sub-árvore.
      * @param idx Indice do nó na raiz.
      */
-    public void preencherFilhos(No _raiz, int idx) {
+    public void preencherNos(No _raiz, int idx) {
         if (idx != 0 && _raiz.getC(idx - 1).getN() >= t) {
             this.pegarEmprestadoAnterior(_raiz, idx);
         } else {
@@ -883,7 +885,7 @@ public class ArvoreBPlus {
                 boolean flag = (i == _raiz.getN());
 
                 if (_raiz.getC(i).getN() < t) {
-                    this.preencherFilhos(_raiz, i);
+                    this.preencherNos(_raiz, i);
                 }
                 if (flag && i > _raiz.getN()) {
                     this.remover(_raiz.getC(i - 1), k);
