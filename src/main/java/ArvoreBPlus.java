@@ -334,7 +334,7 @@ public class ArvoreBPlus {
             i = i + 1;
 
             //Veja se o filho encontrado está cheio
-            if (_raiz.getC(i).getN() == (2 * _raiz.getT() - 1)) {
+            if (_raiz.getC(i).getN() == (2 * this.getT() - 1)) {
                 this.dividirFilho(_raiz, i);
                 if (k > _raiz.getChave(i)) {
                     i = i + 1;
@@ -346,6 +346,8 @@ public class ArvoreBPlus {
 
     /**
      * Inserção em sub-árvore B+.
+     * 
+     * Divisão(split) e Fusão(merge) preventiva para grau máximo.
      *
      * Inserir recursivo em sub-árvore B. Baseado no método B-TREE-INSERT(T,k)
      * Thomas H. Cormen Página 495 Em Cormen r = _raiz
@@ -643,12 +645,14 @@ public class ArvoreBPlus {
     }
 
     /**
-     * Merge de dois nós.
-     *
+     * Fusão(Merge) de dois nós.
+     * 
+     * Realiza a fusão dos nós i e i + 1 na árvore em _raiz.
+     * 
      * @param _raiz Início da árvore.
      * @param idx Indice do nó na raiz.
      */
-    public void mergeFilhos(No _raiz, int idx) {
+    public void fusaoNos(No _raiz, int idx) {
         //Recupera o nó do filho
         No filho = _raiz.getC(idx);
         //Recupera o nó do irmão do filho;
@@ -737,7 +741,7 @@ public class ArvoreBPlus {
                 this.remover(_raiz.getC(idx + 1), ksuc);
             } else {
                 //Ambos os nós noAnt e noProx contêm apenas chave em quantidades menores que o máximo
-                mergeFilhos(_raiz, idx);
+                fusaoNos(_raiz, idx);
                 this.remover(_raiz.getC(idx), k);
             }
         }
@@ -830,9 +834,9 @@ public class ArvoreBPlus {
                 this.pergarEmprestadoProximo(_raiz, idx);
             } else {
                 if (idx != _raiz.getN()) {
-                    this.mergeFilhos(_raiz, idx);
+                    this.fusaoNos(_raiz, idx);
                 } else {
-                    this.mergeFilhos(_raiz, idx - 1);
+                    this.fusaoNos(_raiz, idx - 1);
                 }
             }
         }
