@@ -238,17 +238,17 @@ public class ArvoreBPlus {
     }
 
     /**
-     * Dividir(split) um nó em 2 filhos.
+     * Dividir(split) um nó em 2 nós descendentes.
      *
-     * Função para dividir o filho r deste nó. Observe que r deve estar completo
-     * quando esta função for chamada.
+     * Função para dividir um nó x da posição i em dois nós decendentes. 
+     * Observe que x deve estar completo quando a função for chamada.     
      *
      * Baseado no método B-TREE-SPLIT-CHILD(x,i) Thomas H. Cormen Página 494.
      *
      * @param x Raiz da sub-árvore.
      * @param i Indíce da posição a ser dividida.
      */
-    public void dividirFilho(No x, int i) {
+    public void dividirNo(No x, int i) {
         //Dividir x em duas partes, y e z.
         //Recupera o primeiro filho da raiz.
         //y filho da esquerda da raiz(x)
@@ -335,7 +335,7 @@ public class ArvoreBPlus {
 
             //Veja se o filho encontrado está cheio
             if (_raiz.getC(i).getN() == (2 * this.getT() - 1)) {
-                this.dividirFilho(_raiz, i);
+                this.dividirNo(_raiz, i);
                 if (k > _raiz.getChave(i)) {
                     i = i + 1;
                 }
@@ -347,7 +347,18 @@ public class ArvoreBPlus {
     /**
      * Inserção em sub-árvore B+.
      * 
-     * Divisão(split) e Fusão(merge) preventiva para grau máximo.
+     * Com divisão(split) e fusão(merge) preventiva para grau máximo.
+     * 
+     * Insere os resultados de uma divisão de nó na árvore. 
+     * A função pega uma tupla contendo a chave que será inserida no nó _raiz(pai) 
+     * e ponteiros para os nós descendentes(filhos) esquerdo e direito. 
+     * Primeiro, ele verifica se o nó _raiz(pai) é nulo, nesse caso ele cria 
+     * um novo nó raiz e atualiza os seus atributos. Caso contrário, se o nó 
+     * não estiver cheio (n &lt; 2 * t -1) ele chamada a função inserirNaoCheio 
+     * recursivamente até encontrar a posição da chave a realizar a inserção.
+     * Se o nó estiver cheio cheio (n = 2 * t -1) ele chamada a função dividirNo 
+     * para dividir para a nova raiz na posição 0 em dois nós para poder inserir 
+     * o novo nó e chama a função inserirNaoCheio.
      *
      * Inserir recursivo em sub-árvore B. Baseado no método B-TREE-INSERT(T,k)
      * Thomas H. Cormen Página 495 Em Cormen r = _raiz
@@ -377,7 +388,7 @@ public class ArvoreBPlus {
                 s.setC(0, _raiz);
 
                 //Dividir a raiz atual e mover 1a chave para a nova raiz
-                this.dividirFilho(s, 0);
+                this.dividirNo(s, 0);
 
                 //Insere na nova sub-árvore
                 this.inserirNaoCheio(s, k);
