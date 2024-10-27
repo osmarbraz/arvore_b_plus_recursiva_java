@@ -26,7 +26,7 @@ public class Principal {
         arvore.inserir(arvore.getRaiz(), 30);
         arvore.inserir(arvore.getRaiz(), 40);
         arvore.inserir(arvore.getRaiz(), 50);
-        arvore.inserir(arvore.getRaiz(), 60);        
+        arvore.inserir(arvore.getRaiz(), 60);
         arvore.inserir(arvore.getRaiz(), 70);
         arvore.inserir(arvore.getRaiz(), 80);
         arvore.inserir(arvore.getRaiz(), 90);
@@ -36,7 +36,7 @@ public class Principal {
         System.out.println("Caminho Centro:");
         arvore.listarCentralOrdem();
         System.out.println();
-        
+
         //Grau t = 3
         //Nós: 10 20 30 40 50 60 
         //Árvore:
@@ -149,7 +149,7 @@ public class Principal {
                     //Preenche o valor do dado
                     int dado = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor a ser procurado:"));
                     No encontrou = ipe.procurar(dado);
-                    if (encontrou != null) {                        
+                    if (encontrou != null) {
                         JOptionPane.showMessageDialog(null, "O valor " + dado + " foi encontrado no nó: " + encontrou);
                     } else {
                         JOptionPane.showMessageDialog(null, "O valor " + dado + " não foi encontrado!");

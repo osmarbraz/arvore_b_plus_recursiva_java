@@ -42,7 +42,7 @@ public class ArvoreBPlus {
         this.t = t;
 
         //Define árvore como vazia
-        this.setRaiz(null);
+        this.raiz = null;
     }
 
     /**
@@ -87,18 +87,24 @@ public class ArvoreBPlus {
      * @param _raiz Início da sub-árvore.
      */
     public void listarPreOrdem(No _raiz) {
+        //Se _raiz não for nulo
         if (_raiz != null) {
             int i;
+            //Percorre todas as chaves do nó _raiz
             for (i = 0; i < _raiz.getN(); i++) {
+                //Se for folha
                 if (_raiz.getFolha() == true) {
+                    //Visita a chave i do nó _raiz
                     System.out.print(_raiz.getChave(i) + " ");
                 }
+                //Se não for folha
                 if (_raiz.getFolha() == false) {
+                    //Percorre o filho i do nó _raiz
                     listarPreOrdem(_raiz.getC(i));
                 }
             }
             if (_raiz.getFolha() == false) {
-                //Percorre o último filho            
+                //Percorre o último filho do nó _raiz
                 listarPreOrdem(_raiz.getC(i));
             }
         }
@@ -118,13 +124,16 @@ public class ArvoreBPlus {
      * @param _raiz Início da sub-árvore.
      */
     public void listarCentralOrdem(No _raiz) {
+        //Se _raiz não for nulo
         if (_raiz != null) {
             int i;
+            //Percorre todas as chaves do nó _raiz
             for (i = 0; i < _raiz.getN(); i++) {
                 if (_raiz.getFolha() == false) {
+                    //Percorre o filho i do nó _raiz
                     listarCentralOrdem(_raiz.getC(i));
                 } else {
-                    // Visita a chave i
+                    //Visita a chave i do nó _raiz
                     System.out.print(_raiz.getChave(i) + " ");
                 }
             }
@@ -149,19 +158,21 @@ public class ArvoreBPlus {
      * @param _raiz Início da sub-árvore.
      */
     public void listarPosOrdem(No _raiz) {
+        //Se _raiz não for nulo
         if (_raiz != null) {
             int i;
+            //Percorre todas as chaves do nó _raiz
             for (i = 0; i < _raiz.getN(); i++) {
                 if (_raiz.getFolha() == false) {
-                    //Percorre o filho à esquerda da chave i
+                    //Percorre o filho i do nó _raiz
                     listarPosOrdem(_raiz.getC(i));
                 } else {
-                    // Visita a chave i
+                    //Visita a chave i do nó _raiz
                     System.out.print(_raiz.getChave(i) + " ");
                 }
             }
             if (_raiz.getFolha() == false) {
-                // Percorre o último filho
+                // Percorre o último filho do nó _raiz
                 listarPosOrdem(_raiz.getC(i));
             }
         }
@@ -181,13 +192,16 @@ public class ArvoreBPlus {
      * @param _raiz Início da sub-árvore.
      */
     public void listarEmNilvel(No _raiz) {
+        //Se _raiz não for nulo
         if (_raiz != null) {
             Queue<No> queue = new LinkedList<>();
             queue.add(_raiz);
             while (!queue.isEmpty()) {
                 No atual = queue.poll();
-                for (int i = 0; i < atual.getN(); i++) {;
+                //Percorre todas as chaves do nó _raiz
+                for (int i = 0; i < atual.getN(); i++) {
                     if (_raiz.getFolha() == true) {
+                        //Visita a chave i do nó _raiz
                         System.out.print(atual.getChave(i) + " ");
                     }
                 }
@@ -316,8 +330,8 @@ public class ArvoreBPlus {
         }
 
         //Copia a primeira chave do y para este nó raiz
-        x.setChave(i, y.getChave(t-1));
-        
+        x.setChave(i, y.getChave(t - 1));
+
         //Incrementa a contagem de chaves neste nó
         x.setN(x.getN() + 1);
 
@@ -507,7 +521,7 @@ public class ArvoreBPlus {
      * @param _raiz Raiz da sub-ãrvore.
      * @param k Chave a ser procurada.
      * @return Retorna o nó que possui o valor k.
-     */    
+     */
     public No procurar(No _raiz, int k) {
         //Se a árvore estiver vazia    
         if (_raiz == null) {
@@ -795,7 +809,7 @@ public class ArvoreBPlus {
         _raiz.setN(_raiz.getN() - 1);
 
         //Apaga o irmão
-        irmao = null;
+        //irmao = null;
     }
 
     /**
