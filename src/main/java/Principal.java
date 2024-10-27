@@ -1,6 +1,6 @@
 
 /**
- * Implementação de Árvore B+ Encadeada.
+ * Programa principal de manipulação da Árvore B+.
  */
 import javax.swing.JOptionPane;
 
@@ -30,6 +30,9 @@ public class Principal {
         arvore.inserir(arvore.getRaiz(), 70);
         arvore.inserir(arvore.getRaiz(), 80);
         arvore.inserir(arvore.getRaiz(), 90);
+        arvore.inserir(arvore.getRaiz(), 100);
+        arvore.inserir(arvore.getRaiz(), 110);
+        arvore.inserir(arvore.getRaiz(), 120);
         System.out.println("Caminho Centro:");
         arvore.listarCentralOrdem();
         System.out.println();
@@ -78,7 +81,7 @@ public class Principal {
                     + " 6- Caminhar Em Nível\n"
                     + " 7- Caminhar Em Nível Detalhado\n"
                     + " 8- Contar nós \n"
-                    + " 9- Localizar nó \n"
+                    + " 9- Procurar nó \n"
                     + "10- Mostrar folhas \n"
                     + "11- Altura da árvore\n"
                     + "12- Valor mínimo da árvore\n"
@@ -146,8 +149,8 @@ public class Principal {
                     //Preenche o valor do dado
                     int dado = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor a ser procurado:"));
                     No encontrou = ipe.procurar(dado);
-                    if (encontrou != null) {
-                        JOptionPane.showMessageDialog(null, "O valor " + dado + " foi encontrado!");
+                    if (encontrou != null) {                        
+                        JOptionPane.showMessageDialog(null, "O valor " + dado + " foi encontrado no nó: " + encontrou);
                     } else {
                         JOptionPane.showMessageDialog(null, "O valor " + dado + " não foi encontrado!");
                     }
