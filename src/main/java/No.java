@@ -55,9 +55,9 @@ public class No {
         this.t = t;
         this.folha = folha;
         //Aloca o vetor de chaves
-        this.chave = new int[2 * this.t - 1];
+        this.chave = new int[2 * this.t];
         //Aloca o vetor nós filhos
-        this.c = new No[2 * this.t];
+        this.c = new No[2 * this.t + 1];
     }
 
     /**
@@ -145,7 +145,11 @@ public class No {
      * @param n Um inteiro a ser modificado.
      */
     public void setN(int n) {
-        this.n = n;
+        if ((n >= 0) && (n <= chave.length)) {
+            this.n = n;
+        } else {
+            throw new RuntimeException("N inválido");
+        }
     }
 
     /**
@@ -192,7 +196,7 @@ public class No {
      */
     public int procurarPosicaoChave(int k) {
         int i = 0;
-        while ((i < n) && (k > chave[i])) {
+        while ((i < n) && (chave[i] < k)) {
             if (k == chave[i]) {
                 return i;
             }

@@ -21,18 +21,18 @@ public class Principal {
      * @param arvore Árvore a ser preenchida.
      */
     public static void arvoreExemplo(ArvoreBPlus arvore) {
-        arvore.inserir(arvore.getRaiz(), 10);
-        arvore.inserir(arvore.getRaiz(), 20);
-        arvore.inserir(arvore.getRaiz(), 30);
-        arvore.inserir(arvore.getRaiz(), 40);
-        arvore.inserir(arvore.getRaiz(), 50);
-        arvore.inserir(arvore.getRaiz(), 60);
-        arvore.inserir(arvore.getRaiz(), 70);
-        arvore.inserir(arvore.getRaiz(), 80);
-        arvore.inserir(arvore.getRaiz(), 90);
-        arvore.inserir(arvore.getRaiz(), 100);
-        arvore.inserir(arvore.getRaiz(), 110);
-        arvore.inserir(arvore.getRaiz(), 120);
+        arvore.inserir(10);
+        arvore.inserir(20);
+        arvore.inserir(30);
+        arvore.inserir(40);
+        arvore.inserir(50);
+        arvore.inserir(60);
+        arvore.inserir(70);
+        arvore.inserir(80);
+        arvore.inserir(90);
+        arvore.inserir(100);
+        arvore.inserir(110);
+        arvore.inserir(120);
         System.out.println("Caminho Centro:");
         arvore.listarCentralOrdem();
         System.out.println();
@@ -41,17 +41,17 @@ public class Principal {
         //Nós: 10 20 30 40 50 60 
         //Árvore:
         //      30
-        //10 10    40 50 60
+        //10 20    30 40 50 60
         //
         //Nós:10 20 30 40 50 60 70 80 
         //Árvore:
-        //      30
-        //10 10    40 50 60 70 80
+        //      30       50
+        //10 20   30 40   50 60 70 80
         //
         //Nós: 10 20 30 40 50 60 70 80 90
         //Árvore:
-        //       30      60
-        //10 10    40 50   70 80 90
+        //       30       60       70
+        //10 20    30  40     50  60    70 80 90
     }
 
     /**
