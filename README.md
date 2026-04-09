@@ -2,6 +2,7 @@
 Operações implementadas recursivamente com árvore B+ encadeadas:<br>
 - Inserir<br>
 - Excluir<br>
+- Alterar<br>
 - Caminhar Pré<br>
 - Caminhar Central(In)<br>
 - Caminhar Pós <br>
@@ -12,3 +13,4 @@ Operações implementadas recursivamente com árvore B+ encadeadas:<br>
 - Altura da árvore<br>
 - Valor máximo na árvore<br>
 - Valor mínimo na árvore<br>
+- Apagar árvore<br>

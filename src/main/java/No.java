@@ -1,7 +1,7 @@
 
 /**
  *
- * Nó a ser armazenado na árvore b+.
+ * Nó a ser armazenado na árvore B+.
  *
  */
 public class No {

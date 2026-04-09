@@ -69,24 +69,25 @@ public class Principal {
         int opcao = -1;
 
         //Laço do menu de opções
-        while (opcao != 99) {
+        do {
             //Monta o menu de opções
             opcao = Integer.parseInt(JOptionPane.showInputDialog("\t### Árvore B+ ###\n"
                     + "Selecione a opção desejada:\n"
                     + " 1- Inserir \n"
                     + " 2- Excluir \n"
-                    + " 3- Caminhar Pré Ordem\n"
-                    + " 4- Caminhar Central(In) Ordem\n"
-                    + " 5- Caminhar Pós Ordem\n"
-                    + " 6- Caminhar Em Nível\n"
-                    + " 7- Caminhar Em Nível Detalhado\n"
-                    + " 8- Contar nós \n"
-                    + " 9- Procurar nó \n"
-                    + "10- Mostrar folhas \n"
-                    + "11- Altura da árvore\n"
-                    + "12- Valor mínimo da árvore\n"
-                    + "13- Valor máximo da árvore\n"
-                    + "14- Apagar árvore\n"
+                    + " 3- Alterar \n"
+                    + " 4- Caminhar Pré Ordem\n"
+                    + " 5- Caminhar Central(In) Ordem\n"
+                    + " 6- Caminhar Pós Ordem\n"
+                    + " 7- Caminhar Em Nível\n"
+                    + " 8- Caminhar Em Nível Detalhado\n"
+                    + " 9- Contar nós \n"
+                    + "10- Procurar nó \n"
+                    + "11- Mostrar folhas \n"
+                    + "12- Altura da árvore\n"
+                    + "13- Valor mínimo da árvore\n"
+                    + "14- Valor máximo da árvore\n"
+                    + "15- Apagar árvore\n"
                     + "99- Sair\n"));
 
             switch (opcao) {
@@ -110,42 +111,54 @@ public class Principal {
                     break;
                 }
                 case 3: {
+                    //Preenche o valor do dado                    
+                    int dadoAnterior = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor a ser alterado"));
+                    int dadoNovo = Integer.parseInt(JOptionPane.showInputDialog("Digite o novo valor"));
+                    //Remove o valor da árvore
+                    if (ipe.atualizar(dadoAnterior, dadoNovo) == true) {
+                        System.out.println("Valor " + dadoAnterior + " atualizado para " + dadoNovo);
+                    } else {
+                        System.out.println("Valor " + dadoAnterior + " não alterado na árvore.");
+                    }
+                    break;
+                }                
+                case 4: {
                     System.out.println(">> Caminhamento Pré Ordem");
                     ipe.listarPreOrdem();
                     System.out.println();
                     break;
                 }
-                case 4: {
+                case 5: {
                     System.out.println(">> Caminhamento Central(in)");
                     ipe.listarCentralOrdem();
                     System.out.println();
                     break;
                 }
-                case 5: {
+                case 6: {
                     System.out.println(">> Caminhamento Pós Ordem");
                     ipe.listarPosOrdem();
                     System.out.println();
                     break;
                 }
-                case 6: {
+                case 7: {
                     System.out.println(">> Caminhamento Em Nível");
                     ipe.listarEmNilvel();
                     System.out.println();
                     break;
                 }
-                case 7: {
+                case 8: {
                     System.out.println(">> Caminhamento Em Nível Detalhado");
                     ipe.listarEmNilvelDetalhes();
                     System.out.println();
                     break;
                 }
-                case 8: {
+                case 9: {
                     //Retorna a quantidade de nós
                     int qtde = ipe.contarNo();
                     System.out.println("Nós encontrados: " + qtde);
                     break;
                 }
-                case 9: {
+                case 10: {
                     //Preenche o valor do dado
                     int dado = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor a ser procurado:"));
                     No encontrou = ipe.procurar(dado);
@@ -156,23 +169,23 @@ public class Principal {
                     }
                     break;
                 }
-                case 10: {
+                case 11: {
                     System.out.println("Mostrar Folhas\n" + ipe.encontrarFolhas());
                     break;
                 }
-                case 11: {
+                case 12: {
                     System.out.println("Altura árvore: " + ipe.getAltura());
                     break;
                 }
-                case 12: {
+                case 13: {
                     System.out.println("Valor mínimo da árvore: " + ipe.getValorMinimo());
                     break;
                 }
-                case 13: {
+                case 14: {
                     System.out.println("Valor máximo da árvore: " + ipe.getValorMaximo());
                     break;
                 }
-                case 14: {
+                case 15: {
                     ipe.apagar();
                     System.out.println("Árvore apagada");
                     break;
@@ -194,6 +207,6 @@ public class Principal {
                     break;
                 }
             }//Fim switch   
-        }//Fim while
+        } while (opcao != 99); //Fim do while
     }//Fim main
 }//Fim Principal
