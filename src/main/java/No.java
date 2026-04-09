@@ -50,14 +50,14 @@ public class No {
      * @param folha Indica se o nó é uma folha ou não.
      */
     public No(int t, boolean folha) {
-        this.proximo = null;
+        //this.proximo = null;
         this.n = 0;
         this.t = t;
         this.folha = folha;
         //Aloca o vetor de chaves
-        this.chave = new int[2 * this.t];
+        this.chave = new int[2 * t - 1];
         //Aloca o vetor nós filhos
-        this.c = new No[2 * this.t + 1];
+        this.c = new No[2 * t];
     }
 
     /**

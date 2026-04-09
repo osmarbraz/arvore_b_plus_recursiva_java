@@ -121,7 +121,7 @@ public class Principal {
                         System.out.println("Valor " + dadoAnterior + " não alterado na árvore.");
                     }
                     break;
-                }                
+                }
                 case 4: {
                     System.out.println(">> Caminhamento Pré Ordem");
                     ipe.listarPreOrdem();

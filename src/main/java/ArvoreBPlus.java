@@ -278,7 +278,9 @@ public class ArvoreBPlus {
      * @return
      */
     public boolean atualizar(int antigo, int novo) {
+        //Remove o nó antigo
         if (remover(antigo)) {
+            //Insere o novo nó
             inserir(novo);
             return true;
         }
@@ -297,81 +299,137 @@ public class ArvoreBPlus {
      * @param i Indíce da posição a ser dividida.
      */
     private void dividirNo(No pai, int i) {
-        // y é o nó filho do pai que será dividido
+
+        // y é o nó filho que será dividido (filho do pai na posição i)
         No y = pai.getC(i);
-        // z será o novo nó criado a partir da divisão de y
-        // Ele herda a característica de folha ou não de y
+
+        // z será o novo nó criado após a divisão
+        // Ele terá o mesmo tipo de nó (folha ou interno) que y
         No z = new No(t, y.getFolha());
 
-        // Índice do meio (ponto de divisão)
-        int meio = t;
-
-        // Copia a metade superior das chaves de y para z
-        for (int j = 0; j < t; j++) {
-            z.setChave(j, y.getChave(j + meio));
-        }
-
-        // Limpa o restante do vetor de chaves de z (evita lixo de memória)
-        for (int j = t; j < 2 * t; j++) {
-            z.setChave(j, 0);
-        }
-
-        // Se z NÃO for folha, limpa as referências de filhos não utilizados
-        if (!z.getFolha()) {
-            for (int j = t + 1; j < 2 * t + 1; j++) {
-                z.setC(j, null);
-            }
-        }
-
-        // Se y NÃO for folha, copia os filhos correspondentes para z
-        if (!y.getFolha()) {
-            for (int j = 0; j <= t; j++) {
-                z.setC(j, y.getC(j + meio));
-            }
-        }
-
-        // Atualiza a quantidade de chaves nos nós após divisão
-        z.setN(t);
-        y.setN(t);
-
-        // Limpa as chaves antigas que ficaram na parte "movida" de y
-        for (int j = t; j < 2 * t; j++) {
-            y.setChave(j, 0);
-        }
-
-        // Limpa os filhos antigos de y que foram transferidos para z
-        if (!y.getFolha()) {
-            for (int j = t + 1; j < 2 * t + 1; j++) {
-                y.setC(j, null);
-            }
-        }
-
-        // Abre espaço no vetor de filhos do pai para inserir o novo nó z
-        for (int j = pai.getN(); j >= i + 1; j--) {
-            pai.setC(j + 1, pai.getC(j));
-        }
-        // Garante que a última posição fique limpa
-        pai.setC(pai.getN() + 1, null);
-        // Insere o novo nó z como filho do pai
-        pai.setC(i + 1, z);
-
-        // Abre espaço no vetor de chaves do pai
-        for (int j = pai.getN() - 1; j >= i; j--) {
-            pai.setChave(j + 1, pai.getChave(j));
-        }
-        // Limpa a posição final (evita lixo)
-        pai.setChave(pai.getN(), 0);
-
-        // Promove a primeira chave de z para o pai
-        // (em árvore B+, a separação usa a menor chave do novo nó) 
-        pai.setChave(i, z.getChave(0));
-        // Atualiza o número de chaves do pai
-        pai.setN(pai.getN() + 1);
-
-        // Se for folha, ajusta os ponteiros de encadeamento entre folhas (lista ligada)
+        // =========================
+        // CASO 1: NÓ FOLHA (B+ REAL)
+        // =========================
         if (y.getFolha()) {
+
+            // Calcula o ponto de divisão (meio do nó)
+            // Em B+, usamos a quantidade real de chaves (n), não apenas t
+            int meio = (y.getN() + 1) / 2; // divisão correta B+
+
+            // copia metade direita para z
+            // Índice auxiliar para preencher o novo nó z
+            int j = 0;
+            // Copia a metade direita das chaves de y para z
+            for (int k = meio; k < y.getN(); k++) {
+                // Copia chave para o novo nó (lado direito)
+                z.setChave(j, y.getChave(k));
+                // Limpa a posição antiga no nó y (boa prática)
+                y.setChave(k, 0); // limpa
+                j++;
+            }
+
+            // Define quantas chaves ficaram no novo nó
+            z.setN(j);
+
+            // limpa posições não utilizadas do novo nó
+            for (int k = z.getN(); k < 2 * t - 1; k++) {
+                z.setChave(k, 0);
+            }
+
+            // Atualiza quantidade de chaves do nó original (lado esquerdo)
+            y.setN(meio);
+
+            // limpa posições restantes no nó esquerdo
+            for (int k = y.getN(); k < 2 * t - 1; k++) {
+                y.setChave(k, 0);
+            }
+
+            // Encadeamento de folhas (ESSENCIAL em B+)
+            // O novo nó aponta para o próximo de y
             z.setProximo(y.getProximo());
+            // y passa a apontar para z
             y.setProximo(z);
+
+            // Ajuste dos filhos no nó pai
+            // shift filhos no pai
+            // Desloca os filhos do pai para abrir espaço para z
+            for (int k = pai.getN(); k >= i + 1; k--) {
+                pai.setC(k + 1, pai.getC(k));
+            }
+
+            // Insere z como novo filho do pai
+            pai.setC(i + 1, z);
+
+            // Ajuste das chaves no pai
+            // shift chaves no pai
+            // Desloca as chaves do pai para abrir espaço
+            for (int k = pai.getN() - 1; k >= i; k--) {
+                pai.setChave(k + 1, pai.getChave(k));
+            }
+
+            // Em B+, NÃO removemos a chave do nó folha
+            // Promovemos uma CÓPIA da menor chave do novo nó direito
+            pai.setChave(i, z.getChave(0));
+
+            // Atualiza número de chaves do pai
+            pai.setN(pai.getN() + 1);
+
+        } // =========================
+        // CASO 2: NÓ INTERNO
+        // =========================
+        else {
+
+            // Chave do meio que será promovida ao pai
+            // Diferente da folha, aqui ela é REMOVIDA do nó original
+            int chaveMeio = y.getChave(t - 1);
+
+            // Copia as chaves da metade direita para o novo nó z                        
+            for (int j = 0; j < t - 1; j++) {
+                // Copia chave
+                z.setChave(j, y.getChave(j + t));
+                // Limpa posição antiga
+                y.setChave(j + t, 0); // limpa
+            }
+
+            // Copia os filhos correspondentes para z
+            for (int j = 0; j < t; j++) {
+                // Move ponteiro do filho
+                z.setC(j, y.getC(j + t));
+                // Remove referência antiga
+                y.setC(j + t, null); // limpa
+            }
+
+            // Ajusta quantidades de chaves
+            z.setN(t - 1);
+            y.setN(t - 1);
+
+            // limpa resto do vetor de chaves
+            for (int j = y.getN(); j < 2 * t - 1; j++) {
+                y.setChave(j, 0);
+            }
+
+            // Ajuste dos filhos no pai
+            // shift filhos no pai
+            // Abre espaço para o novo filho
+            for (int j = pai.getN(); j >= i + 1; j--) {
+                pai.setC(j + 1, pai.getC(j));
+            }
+
+            // Insere o novo nó z como filho do pai
+            pai.setC(i + 1, z);
+
+            // Ajuste das chaves no pai
+            // shift chaves no pai
+            // Abre espaço para a chave promovida
+            for (int j = pai.getN() - 1; j >= i; j--) {
+                pai.setChave(j + 1, pai.getChave(j));
+            }
+
+            // Em nó interno (igual B-tree), a chave do meio SOBE e sai do filho
+            pai.setChave(i, chaveMeio);
+
+            // Atualiza número de chaves do pai
+            pai.setN(pai.getN() + 1);
         }
     }
 
@@ -395,16 +453,18 @@ public class ArvoreBPlus {
                 no.setChave(i + 1, no.getChave(i));
                 i--;
             }
+
             // Insere a nova chave na posição correta (ordenada)
             no.setChave(i + 1, k);
 
-            // Limpa a próxima posição para evitar "lixo" no vetor
-            // (boa prática quando se usa arrays fixos)
-            if (no.getN() + 1 < 2 * t) {
-                no.setChave(no.getN() + 1, 0);
-            }
             // Atualiza o número de chaves do nó
             no.setN(no.getN() + 1);
+
+            // Limpa a próxima posição para evitar "lixo" no vetor
+            // (boa prática quando se usa arrays fixos)
+            if (no.getN() + 1 < 2 * t - 1) {
+                no.setChave(no.getN(), 0);
+            }
 
             // CASO 2: NÓ INTERNO
         } else {
@@ -417,7 +477,7 @@ public class ArvoreBPlus {
             i++;
 
             // Verifica se o filho está cheio
-            if (no.getC(i).getN() == 2 * t) {
+            if (no.getC(i).getN() == 2 * t - 1) {
                 // Divide o filho antes de descer
                 // (garante que nunca desceremos em nó cheio)
                 dividirNo(no, i);
@@ -464,9 +524,9 @@ public class ArvoreBPlus {
             // Atualiza a quantidade de chaves
             raiz.setN(1);
 
-        // CASO 2: RAIZ CHEIA            
+            // CASO 2: RAIZ CHEIA            
         } else {
-            if (raiz.getN() == 2 * t) {
+            if (raiz.getN() == 2 * t - 1) {
                 // Cria um novo nó que será a nova raiz (não é folha)
                 No nova = new No(t, false);
                 // A antiga raiz passa a ser filha da nova raiz
@@ -478,15 +538,18 @@ public class ArvoreBPlus {
 
                 // Decide em qual dos dois filhos inserir a nova chave
                 // Se for maior que a chave promovida → vai para o filho da direita
-                int i = (k > nova.getChave(0)) ? 1 : 0;
-                
+                int i = 0;
+                if (k > nova.getChave(0)) {
+                    i++;
+                }
+
                 // Insere recursivamente no filho correto (garantido não cheio)
                 inserirNaoCheio(nova.getC(i), k);
-                
+
                 // Atualiza a referência da raiz da árvore
                 raiz = nova;
-            
-            // CASO 3: RAIZ NÃO CHEIA
+
+                // CASO 3: RAIZ NÃO CHEIA
             } else {
                 inserirNaoCheio(raiz, k);
             }
