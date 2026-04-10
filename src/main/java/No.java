@@ -44,7 +44,7 @@ public class No {
     }
 
     /**
-     * Construtor sem parâmetros.
+     * Construtor com parâmetros.
      *
      * @param t Grau da árvore, quantidade de filhos para o nó.
      * @param folha Indica se o nó é uma folha ou não.
