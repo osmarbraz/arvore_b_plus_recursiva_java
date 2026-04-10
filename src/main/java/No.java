@@ -50,7 +50,7 @@ public class No {
      * @param folha Indica se o nó é uma folha ou não.
      */
     public No(int t, boolean folha) {
-        //this.proximo = null;
+        this.proximo = null;
         this.n = 0;
         this.t = t;
         this.folha = folha;
